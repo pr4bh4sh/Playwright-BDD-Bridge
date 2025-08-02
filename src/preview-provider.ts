@@ -109,15 +109,18 @@ export class PreviewProvider {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
-            background-color: var(--vscode-titleBar-activeBackground);
-            border-bottom: 1px solid var(--vscode-panel-border);
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #2d2d2d 0%, #1e1e1e 100%);
+            border-bottom: 2px solid #404040;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .header h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--vscode-titleBar-activeForeground);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #00b894;
+            text-shadow: 0 0 10px rgba(0, 184, 148, 0.3);
+            letter-spacing: 0.5px;
         }
 
         .controls {
@@ -126,18 +129,23 @@ export class PreviewProvider {
         }
 
         .btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--vscode-button-border);
-            background-color: var(--vscode-button-background);
-            color: var(--vscode-button-foreground);
-            border-radius: 4px;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #404040;
+            background: linear-gradient(135deg, #2d2d2d 0%, #1e1e1e 100%);
+            color: #e8e8e8;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 0.875rem;
-            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .btn:hover {
-            background-color: var(--vscode-button-hoverBackground);
+            background: linear-gradient(135deg, #404040 0%, #2d2d2d 100%);
+            border-color: #00b894;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         .btn-primary {
@@ -177,6 +185,60 @@ export class PreviewProvider {
         .loading {
             color: var(--vscode-descriptionForeground);
             font-style: italic;
+        }
+
+        /* Beautiful Gherkin styling */
+        .gherkin-content {
+            background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+            border: 2px solid #404040;
+            border-radius: 8px;
+            padding: 1.5rem;
+            min-height: 200px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            color: #e8e8e8;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Gherkin element styling */
+        .gherkin-feature {
+            color: #00b894;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid #00b894;
+        }
+
+        .gherkin-background {
+            color: #fdcb6e;
+            font-weight: bold;
+            font-size: 1rem;
+            margin: 1rem 0 0.5rem 0;
+            padding: 0.5rem;
+            background: rgba(253, 203, 110, 0.1);
+            border-left: 4px solid #fdcb6e;
+            border-radius: 4px;
+        }
+
+        .gherkin-scenario {
+            color: #e17055;
+            font-weight: bold;
+            font-size: 1rem;
+            margin: 1rem 0 0.5rem 0;
+            padding: 0.5rem;
+            background: rgba(225, 112, 85, 0.1);
+            border-left: 4px solid #e17055;
+            border-radius: 4px;
+        }
+
+        .gherkin-keyword {
+            color: #6c5ce7;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(108, 92, 231, 0.3);
+        }
         }
 
         .edit-panel {
