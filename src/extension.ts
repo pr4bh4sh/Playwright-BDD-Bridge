@@ -82,13 +82,13 @@ export function activate(context: vscode.ExtensionContext) {
             const gherkinString = converter.generateGherkinString(gherkinDocument);
             
             // Open the preview in a new webview
-                                    const panel = vscode.window.createWebviewPanel(
-                            'playwrightBddBridge',
-                            'Playwright BDD Bridge',
+            const panel = vscode.window.createWebviewPanel(
+                'playwrightBddBridge',
+                'Playwright BDD Bridge',
                 vscode.ViewColumn.Beside,
                 {
                     enableScripts: true,
-                    retainContextWhenHidden: false
+                    retainContextWhenHidden: true
                 }
             );
             

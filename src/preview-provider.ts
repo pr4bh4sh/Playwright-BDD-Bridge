@@ -40,6 +40,23 @@ export class PreviewProvider {
                     case 'saveChanges':
                         this._saveChanges(document, webviewPanel, message.content);
                         break;
+                    case 'webviewReady':
+                        // Webview is ready, send initial content
+                        this._refreshPreview(document, webviewPanel);
+                        break;
+                }
+            },
+            undefined,
+            this._disposables
+        );
+
+        // Handle webview panel focus events
+        webviewPanel.onDidChangeViewState(
+            event => {
+                if (event.webviewPanel.visible && event.webviewPanel.active) {
+                    this.logToFile('🔄 Webview regained focus, refreshing content...');
+                    console.log('🔄 Webview regained focus, refreshing content...');
+                    this._refreshPreview(document, webviewPanel);
                 }
             },
             undefined,
@@ -423,6 +440,15 @@ export class PreviewProvider {
             // console.log('🚀 - saveBtn:', saveBtn); // Edit mode disabled
             // console.log('🚀 - cancelBtn:', cancelBtn); // Edit mode disabled
             console.log('🚀 - statusText:', statusText);
+            
+            // Notify extension that webview is ready
+            vscode.postMessage({ command: 'webviewReady' });
+            
+            // Handle window focus events
+            window.addEventListener('focus', () => {
+                console.log('🔄 Window gained focus, requesting content refresh...');
+                vscode.postMessage({ command: 'refresh' });
+            });
         })();
     </script>
 </body>
