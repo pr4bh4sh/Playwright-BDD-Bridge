@@ -9,19 +9,12 @@ export function activate(context: vscode.ExtensionContext) {
     console.log('Extension activating...'); // DEBUG LOG
     vscode.window.showInformationMessage('Extension activated!');
     
-    // Initialize Winston logger
-    const logger = Logger.initialize(context);
+    // Initialize VS Code OutputChannel logger
+    const outputChannel = Logger.initialize(context);
     
     // Log extension activation
     Logger.info('🚀 Extension activating...', { 
-        extensionPath: context.extensionPath,
-        logUri: context.logUri?.toString()
-    });
-    
-    // Log extension activation with Winston only
-    Logger.info('🚀 Extension activating...', { 
-        extensionPath: context.extensionPath,
-        logUri: context.logUri?.toString()
+        extensionPath: context.extensionPath
     });
     
     // Register the preview provider
@@ -44,17 +37,6 @@ export function activate(context: vscode.ExtensionContext) {
     });
     
     const openPreviewCommand = vscode.commands.registerCommand('playwright-bdd-bridge.openPreview', async () => {
-        // Log command execution immediately
-        try {
-            const fs = require('fs');
-            const path = require('path');
-            const timestamp = new Date().toISOString();
-            const logMessage = `[${timestamp}] 🎯 Open preview command executed\n`;
-            const logFile = path.join(__dirname, '..', '..', 'extension-debug.log');
-            fs.appendFileSync(logFile, logMessage);
-        } catch (error) {
-            console.error('Failed to write to log file:', error);
-        }
         
         const activeEditor = vscode.window.activeTextEditor;
         if (!activeEditor) {

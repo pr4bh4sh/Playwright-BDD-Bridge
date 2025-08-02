@@ -1,96 +1,59 @@
-import * as winston from 'winston';
-import * as path from 'path';
-import * as fs from 'fs';
+import * as vscode from 'vscode';
 
 export class Logger {
-    private static instance: winston.Logger;
-    private static logDir: string;
+    private static outputChannel: vscode.OutputChannel;
 
-    public static initialize(context: any): winston.Logger {
-        if (!Logger.instance) {
-            // Create log directory in the extension's log path
-            Logger.logDir = path.join(context.logUri.fsPath, 'playwright-gherkin-preview');
-            
-            // Ensure log directory exists
-            if (!fs.existsSync(Logger.logDir)) {
-                fs.mkdirSync(Logger.logDir, { recursive: true });
-            }
-
-            // Create Winston logger
-            Logger.instance = winston.createLogger({
-                level: 'debug',
-                format: winston.format.combine(
-                    winston.format.timestamp({
-                        format: 'YYYY-MM-DD HH:mm:ss'
-                    }),
-                    winston.format.errors({ stack: true }),
-                    winston.format.json()
-                ),
-                defaultMeta: { service: 'playwright-gherkin-preview' },
-                transports: [
-                    // File transport for all logs
-                    new winston.transports.File({
-                        filename: path.join(Logger.logDir, 'extension.log'),
-                        level: 'info',
-                        format: winston.format.combine(
-                            winston.format.timestamp(),
-                            winston.format.printf(({ timestamp, level, message, ...meta }) => {
-                                return `${timestamp} [${level.toUpperCase()}]: ${message} ${Object.keys(meta).length ? JSON.stringify(meta, null, 2) : ''}`;
-                            })
-                        )
-                    }),
-                    // Debug file transport
-                    new winston.transports.File({
-                        filename: path.join(Logger.logDir, 'debug.log'),
-                        level: 'debug',
-                        format: winston.format.combine(
-                            winston.format.timestamp(),
-                            winston.format.printf(({ timestamp, level, message, ...meta }) => {
-                                return `${timestamp} [${level.toUpperCase()}]: ${message} ${Object.keys(meta).length ? JSON.stringify(meta, null, 2) : ''}`;
-                            })
-                        )
-                    }),
-                    // Console transport with custom format
-                    new winston.transports.Console({
-                        level: 'debug',
-                        format: winston.format.combine(
-                            winston.format.colorize(),
-                            winston.format.timestamp(),
-                            winston.format.printf(({ timestamp, level, message, ...meta }) => {
-                                return `${timestamp} [${level}]: ${message} ${Object.keys(meta).length ? JSON.stringify(meta, null, 2) : ''}`;
-                            })
-                        )
-                    })
-                ]
-            });
+    public static initialize(context: vscode.ExtensionContext): vscode.OutputChannel {
+        if (!Logger.outputChannel) {
+            // Create VSCode output channel
+            Logger.outputChannel = vscode.window.createOutputChannel('Playwright BDD Bridge');
+            context.subscriptions.push(Logger.outputChannel);
 
             // Log initialization
-            Logger.instance.info('🚀 Winston logger initialized', { logDir: Logger.logDir });
+            Logger.info('🚀 Logger initialized with VS Code OutputChannel');
         }
 
-        return Logger.instance;
+        return Logger.outputChannel;
     }
 
-    public static getLogger(): winston.Logger {
-        if (!Logger.instance) {
+    public static getOutputChannel(): vscode.OutputChannel {
+        if (!Logger.outputChannel) {
             throw new Error('Logger not initialized. Call Logger.initialize() first.');
         }
-        return Logger.instance;
+        return Logger.outputChannel;
     }
 
     public static info(message: string, meta?: any): void {
-        Logger.getLogger().info(message, meta);
+        const timestamp = new Date().toISOString();
+        const metaString = meta ? ` ${JSON.stringify(meta)}` : '';
+        Logger.getOutputChannel().appendLine(`[${timestamp}] [INFO] ${message}${metaString}`);
     }
 
     public static debug(message: string, meta?: any): void {
-        Logger.getLogger().debug(message, meta);
+        const timestamp = new Date().toISOString();
+        const metaString = meta ? ` ${JSON.stringify(meta)}` : '';
+        Logger.getOutputChannel().appendLine(`[${timestamp}] [DEBUG] ${message}${metaString}`);
     }
 
     public static warn(message: string, meta?: any): void {
-        Logger.getLogger().warn(message, meta);
+        const timestamp = new Date().toISOString();
+        const metaString = meta ? ` ${JSON.stringify(meta)}` : '';
+        Logger.getOutputChannel().appendLine(`[${timestamp}] [WARN] ${message}${metaString}`);
     }
 
     public static error(message: string, meta?: any): void {
-        Logger.getLogger().error(message, meta);
+        const timestamp = new Date().toISOString();
+        const metaString = meta ? ` ${JSON.stringify(meta)}` : '';
+        Logger.getOutputChannel().appendLine(`[${timestamp}] [ERROR] ${message}${metaString}`);
+    }
+
+    public static trace(message: string, meta?: any): void {
+        const timestamp = new Date().toISOString();
+        const metaString = meta ? ` ${JSON.stringify(meta)}` : '';
+        Logger.getOutputChannel().appendLine(`[${timestamp}] [TRACE] ${message}${metaString}`);
+    }
+
+    public static show(): void {
+        Logger.getOutputChannel().show();
     }
 } 

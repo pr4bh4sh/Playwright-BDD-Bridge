@@ -14,7 +14,7 @@ export class PreviewProvider {
     }
 
     public setupWebview(webviewPanel: vscode.WebviewPanel, document: vscode.TextDocument): void {
-        this.logToFile('🔧 Setting up webview...');
+        Logger.info('🔧 Setting up webview...');
         console.log('🔧 Setting up webview...');
         
         // Set up the webview with proper isolation
@@ -25,13 +25,13 @@ export class PreviewProvider {
 
         // Set the webview's initial html content
         webviewPanel.webview.html = this._getHtmlForWebview(webviewPanel.webview);
-        this.logToFile('🔧 Webview HTML set');
+        Logger.info('🔧 Webview HTML set');
         console.log('🔧 Webview HTML set');
 
         // Handle messages from the webview
         webviewPanel.webview.onDidReceiveMessage(
             message => {
-                this.logToFile(`📨 Extension received message from webview: ${JSON.stringify(message)}`);
+                Logger.info(`📨 Extension received message from webview: ${JSON.stringify(message)}`);
                 console.log('📨 Extension received message from webview:', message);
                 switch (message.command) {
                     case 'refresh':
@@ -54,7 +54,7 @@ export class PreviewProvider {
         webviewPanel.onDidChangeViewState(
             event => {
                 if (event.webviewPanel.visible && event.webviewPanel.active) {
-                    this.logToFile('🔄 Webview regained focus, refreshing content...');
+                    Logger.info('🔄 Webview regained focus, refreshing content...');
                     console.log('🔄 Webview regained focus, refreshing content...');
                     this._refreshPreview(document, webviewPanel);
                 }
@@ -64,7 +64,7 @@ export class PreviewProvider {
         );
 
         // Initial content load
-        this.logToFile('🔧 Starting initial content load...');
+        Logger.info('🔧 Starting initial content load...');
         console.log('🔧 Starting initial content load...');
         this._refreshPreview(document, webviewPanel);
     }
@@ -519,68 +519,68 @@ export class PreviewProvider {
 
     private async _refreshPreview(document: vscode.TextDocument, webviewPanel: vscode.WebviewPanel): Promise<void> {
         try {
-            this.logToFile('🔄 Starting preview refresh...');
+            Logger.info('🔄 Starting preview refresh...');
             console.log('🔄 Starting preview refresh...');
             
             const sourceCode = document.getText();
-            this.logToFile(`📄 Source code length: ${sourceCode.length}`);
-            this.logToFile(`📄 Source code preview: ${sourceCode.substring(0, 200)}...`);
-            this.logToFile(`📄 Full source code: ${sourceCode}`);
+            Logger.info(`📄 Source code length: ${sourceCode.length}`);
+            Logger.info(`📄 Source code preview: ${sourceCode.substring(0, 200)}...`);
+            Logger.info(`📄 Full source code: ${sourceCode}`);
             console.log('📄 Source code length:', sourceCode.length);
             console.log('📄 Source code preview:', sourceCode.substring(0, 200) + '...');
             console.log('📄 Full source code:', sourceCode);
             
-            this.logToFile('🔍 Creating parser...');
+            Logger.info('🔍 Creating parser...');
             console.log('🔍 Creating parser...');
             const parser = new PlaywrightParser(sourceCode);
             
-            this.logToFile('🔍 Parsing test file...');
+            Logger.info('🔍 Parsing test file...');
             console.log('🔍 Parsing test file...');
             const parsedTest = parser.parse();
-            this.logToFile(`📊 Parsed test result: ${JSON.stringify(parsedTest, null, 2)}`);
+            Logger.info(`📊 Parsed test result: ${JSON.stringify(parsedTest, null, 2)}`);
             console.log('📊 Parsed test result:', JSON.stringify(parsedTest, null, 2));
             
-            this.logToFile('🔄 Creating converter...');
+            Logger.info('🔄 Creating converter...');
             console.log('🔄 Creating converter...');
             const converter = new GherkinConverter();
             
-            this.logToFile('🔄 Converting to Gherkin document...');
+            Logger.info('🔄 Converting to Gherkin document...');
             console.log('🔄 Converting to Gherkin document...');
             const gherkinDocument = converter.convert(parsedTest);
-            this.logToFile(`📊 Gherkin document: ${JSON.stringify(gherkinDocument, null, 2)}`);
+            Logger.info(`📊 Gherkin document: ${JSON.stringify(gherkinDocument, null, 2)}`);
             console.log('📊 Gherkin document:', JSON.stringify(gherkinDocument, null, 2));
             
-            this.logToFile('🔄 Generating Gherkin string...');
+            Logger.info('🔄 Generating Gherkin string...');
             console.log('🔄 Generating Gherkin string...');
             const gherkinString = converter.generateGherkinString(gherkinDocument);
-            this.logToFile(`✅ Generated Gherkin string: ${gherkinString}`);
-            this.logToFile(`✅ Gherkin string length: ${gherkinString.length}`);
+            Logger.info(`✅ Generated Gherkin string: ${gherkinString}`);
+            Logger.info(`✅ Gherkin string length: ${gherkinString.length}`);
             console.log('✅ Generated Gherkin string:', gherkinString);
             console.log('✅ Gherkin string length:', gherkinString.length);
 
-            this.logToFile('📤 Sending updateContent message to webview...');
+            Logger.info('📤 Sending updateContent message to webview...');
             console.log('📤 Sending updateContent message to webview...');
             webviewPanel.webview.postMessage({
                 command: 'updateContent',
                 content: gherkinString
             });
-            this.logToFile('✅ updateContent message sent');
+            Logger.info('✅ updateContent message sent');
             console.log('✅ updateContent message sent');
 
-            this.logToFile('📤 Sending updateStatus message to webview...');
+            Logger.info('📤 Sending updateStatus message to webview...');
             console.log('📤 Sending updateStatus message to webview...');
             webviewPanel.webview.postMessage({
                 command: 'updateStatus',
                 text: 'Preview updated successfully'
             });
-            this.logToFile('✅ updateStatus message sent');
+            Logger.info('✅ updateStatus message sent');
             console.log('✅ updateStatus message sent');
             
-            this.logToFile('🎉 Preview refresh completed successfully');
+            Logger.info('🎉 Preview refresh completed successfully');
             console.log('🎉 Preview refresh completed successfully');
         } catch (error) {
-            this.logToFile(`❌ Error refreshing preview: ${error}`);
-            this.logToFile(`❌ Error stack: ${error instanceof Error ? error.stack : 'No stack trace'}`);
+            Logger.info(`❌ Error refreshing preview: ${error}`);
+            Logger.info(`❌ Error stack: ${error instanceof Error ? error.stack : 'No stack trace'}`);
             console.error('❌ Error refreshing preview:', error);
             console.error('❌ Error stack:', error instanceof Error ? error.stack : 'No stack trace');
             webviewPanel.webview.postMessage({
@@ -607,10 +607,7 @@ export class PreviewProvider {
         }
     }
 
-    private logToFile(message: string): void {
-        // Log with Winston
-        Logger.info(message);
-    }
+    // Removed logToFile method - using Logger directly
 
     public dispose(): void {
         this._disposables.forEach(d => d.dispose());
