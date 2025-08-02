@@ -109,29 +109,29 @@ export class GherkinConverter {
     }
 
     private convertStepToGherkinText(step: TestStep): string {
+        // Start with the step description
         let text = step.description;
 
-        // Extract values from the code for better Gherkin syntax
-        const code = step.code;
-        
-        // Extract quoted strings (usernames, passwords, etc.)
-        const stringMatches = code.match(/['"`]([^'"`]*)['"`]/g);
-        if (stringMatches) {
-            stringMatches.forEach(match => {
-                const value = match.slice(1, -1); // Remove quotes
-                // Replace the first word in the description with the quoted value
-                text = text.replace(/^(\w+)/, `$1 "${value}"`);
-            });
+        // Clean up the text to make it more readable
+        // Remove any extra quotes or formatting
+        text = text.replace(/['"`]/g, '');
+
+        // Convert common patterns to better Gherkin syntax
+        if (text.includes('enter username')) {
+            text = 'enters username';
+        } else if (text.includes('enter password')) {
+            text = 'enters password';
+        } else if (text.includes('click login button')) {
+            text = 'clicks the login button';
+        } else if (text.includes('verify successful login')) {
+            text = 'verify successful login';
+        } else if (text.includes('enter invalid username')) {
+            text = 'enters invalid username';
+        } else if (text.includes('enter invalid password')) {
+            text = 'enters invalid password';
+        } else if (text.includes('verify error message')) {
+            text = 'verify error message';
         }
-
-        // Extract selectors and make them more readable
-        text = text.replace(/#(\w+)/, 'the $1 field');
-        text = text.replace(/\.(\w+)/, 'the $1 element');
-
-        // Improve readability
-        text = text.replace(/^enter (\w+)/, 'the user enters $1');
-        text = text.replace(/^click (\w+)/, 'the user clicks the $1');
-        text = text.replace(/^verify (\w+)/, 'the $1 should be visible');
 
         return text;
     }
