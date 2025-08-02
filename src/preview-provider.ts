@@ -83,7 +83,7 @@ export class PreviewProvider {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playwright to Gherkin Preview</title>
+    <title>Playwright BDD Bridge</title>
     <style>
         * {
             margin: 0;
