@@ -1,5 +1,5 @@
 
-# VS Code Extension Development Prompt: Playwright to Gherkin Preview
+# VS Code Extension Development Prompt: Playwright BDD Bridge
 
 ## Project Overview
 Create a VS Code extension that provides a live preview of Playwright test files converted to Gherkin syntax with bidirectional editing capabilities.
@@ -8,7 +8,7 @@ Create a VS Code extension that provides a live preview of Playwright test files
 
 ### 1. Extension Structure
 - **Name**: `playwright-gherkin-preview`
-- **Display Name**: "Playwright to Gherkin Preview"
+- **Display Name**: "Playwright BDD Bridge"
 - **Description**: "Live preview of Playwright test files converted to Gherkin syntax with bidirectional editing"
 - **Version**: `0.1.0`
 - **Publisher**: `playwright-gherkin-preview`

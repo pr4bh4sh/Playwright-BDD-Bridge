@@ -306,7 +306,7 @@ export class PreviewProvider {
 <body>
     <div class="container">
         <div class="header">
-            <h1>Playwright to Gherkin Preview</h1>
+            <h1>Playwright BDD Bridge</h1>
             <div class="controls">
                 <button id="refreshBtn" class="btn">Refresh</button>
                 <!-- Edit Mode button disabled for now -->
