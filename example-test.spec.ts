@@ -2,7 +2,9 @@ import { test, expect } from '@playwright/test';
 
 test.describe('User Authentication', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('https://example.com/login');
+    await test.step('the user is on the login page', async () => {
+      await page.goto('https://example.com/login');
+    });
   });
 
   test('should login with valid credentials', async ({ page }) => {

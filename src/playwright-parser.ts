@@ -82,6 +82,11 @@ export class PlaywrightParser {
                     }
                 }
                 
+                // Save background if we have any
+                if (currentSuite && inBackground && currentSteps.length > 0) {
+                    currentSuite.background = [...currentSteps];
+                }
+                
                 const name = this.extractStringLiteral(trimmedLine);
                 currentTestCase = {
                     name: name || 'Unnamed Test',

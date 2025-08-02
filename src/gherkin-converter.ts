@@ -101,7 +101,7 @@ export class GherkinConverter {
             description.includes('should') ||
             description.includes('expect') ||
             description.includes('assert')) {
-            return index === 1 ? 'Then' : 'And';
+            return 'Then';
         }
 
         // Default: alternate between When and Then based on position
