@@ -1,0 +1,83 @@
+{
+  "name": "playwright-bdd-bridge",
+  "displayName": "Playwright BDD Bridge",
+  "description": "A VS Code extension that bridges Playwright tests to Gherkin syntax with live preview and bidirectional editing capabilities.",
+  "version": "0.1.0",
+  "publisher": "playwright-bdd-bridge",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:typescript"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "playwright-bdd-bridge.openPreview",
+        "title": "Playwright: Open BDD Preview"
+      },
+      {
+        "command": "playwright-bdd-bridge.refreshPreview",
+        "title": "Refresh BDD Preview"
+      },
+      {
+        "command": "playwright-bdd-bridge.showView",
+        "title": "Show BDD Preview View"
+      },
+      {
+        "command": "playwright-bdd-bridge.test",
+        "title": "Test Extension"
+      },
+      {
+        "command": "playwright-bdd-bridge.openLogFile",
+        "title": "Open Log File"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "resourceExtname == .ts",
+          "command": "playwright-bdd-bridge.openPreview",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "resourceExtname == .ts",
+          "command": "playwright-bdd-bridge.openPreview",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "@types/winston": "^2.4.4",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "typescript": "^5.0.0",
+    "winston": "^3.17.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playwright-bdd-bridge/vscode-extension.git"
+  },
+  "license": "MIT"
+}
