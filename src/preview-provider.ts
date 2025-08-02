@@ -230,7 +230,8 @@ export class PreviewProvider {
             <h1>Playwright to Gherkin Preview</h1>
             <div class="controls">
                 <button id="refreshBtn" class="btn">Refresh</button>
-                <button id="editBtn" class="btn">Edit Mode</button>
+                <!-- Edit Mode button disabled for now -->
+                <!-- <button id="editBtn" class="btn">Edit Mode</button> -->
             </div>
         </div>
         
@@ -241,13 +242,14 @@ export class PreviewProvider {
                 </div>
             </div>
             
-            <div class="edit-panel" id="editPanel" style="display: none;">
+            <!-- Edit panel disabled for now -->
+            <!-- <div class="edit-panel" id="editPanel" style="display: none;">
                 <textarea id="gherkinEditor" class="gherkin-editor" placeholder="Edit Gherkin content here..."></textarea>
                 <div class="edit-controls">
                     <button id="saveBtn" class="btn btn-primary">Save Changes</button>
                     <button id="cancelBtn" class="btn">Cancel</button>
                 </div>
-            </div>
+            </div> -->
         </div>
         
         <div class="status-bar">
@@ -263,16 +265,17 @@ export class PreviewProvider {
 
             // DOM elements
             const gherkinContent = document.getElementById('gherkinContent');
-            const editPanel = document.getElementById('editPanel');
-            const gherkinEditor = document.getElementById('gherkinEditor');
+            // Edit mode elements disabled for now
+            // const editPanel = document.getElementById('editPanel');
+            // const gherkinEditor = document.getElementById('gherkinEditor');
             const refreshBtn = document.getElementById('refreshBtn');
-            const editBtn = document.getElementById('editBtn');
-            const saveBtn = document.getElementById('saveBtn');
-            const cancelBtn = document.getElementById('cancelBtn');
+            // const editBtn = document.getElementById('editBtn');
+            // const saveBtn = document.getElementById('saveBtn');
+            // const cancelBtn = document.getElementById('cancelBtn');
             const statusText = document.getElementById('statusText');
 
             let currentGherkinContent = '';
-            let isEditMode = false;
+            // let isEditMode = false; // Edit mode disabled for now
 
             // Event listeners
             refreshBtn.addEventListener('click', () => {
@@ -280,17 +283,18 @@ export class PreviewProvider {
                 updateStatus('Refreshing...');
             });
 
-            editBtn.addEventListener('click', () => {
-                toggleEditMode();
-            });
+            // Edit mode event listeners disabled for now
+            // editBtn.addEventListener('click', () => {
+            //     toggleEditMode();
+            // });
 
-            saveBtn.addEventListener('click', () => {
-                saveChanges();
-            });
+            // saveBtn.addEventListener('click', () => {
+            //     saveChanges();
+            // });
 
-            cancelBtn.addEventListener('click', () => {
-                cancelEdit();
-            });
+            // cancelBtn.addEventListener('click', () => {
+            //     cancelEdit();
+            // });
 
             // Handle messages from the extension
             window.addEventListener('message', event => {
@@ -323,15 +327,21 @@ export class PreviewProvider {
                 console.log('📝 Content length:', content ? content.length : 'null/undefined');
                 currentGherkinContent = content;
                 
-                if (isEditMode) {
-                    console.log('📝 Setting content in edit mode');
-                    gherkinEditor.value = content;
-                } else {
-                    console.log('📝 Setting content in view mode');
-                    const formattedContent = formatGherkinContent(content);
-                    console.log('📝 Formatted content:', formattedContent);
-                    gherkinContent.innerHTML = formattedContent;
-                }
+                // Edit mode disabled for now
+                // if (isEditMode) {
+                //     console.log('📝 Setting content in edit mode');
+                //     gherkinEditor.value = content;
+                // } else {
+                //     console.log('📝 Setting content in view mode');
+                //     const formattedContent = formatGherkinContent(content);
+                //     console.log('📝 Formatted content:', formattedContent);
+                //     gherkinContent.innerHTML = formattedContent;
+                // }
+                
+                console.log('📝 Setting content in view mode');
+                const formattedContent = formatGherkinContent(content);
+                console.log('📝 Formatted content:', formattedContent);
+                gherkinContent.innerHTML = formattedContent;
                 
                 updateStatus('Content updated');
             }
@@ -356,39 +366,40 @@ export class PreviewProvider {
                 return formatted;
             }
 
-            function toggleEditMode() {
-                isEditMode = !isEditMode;
-                
-                if (isEditMode) {
-                    editPanel.style.display = 'flex';
-                    gherkinEditor.value = currentGherkinContent;
-                    editBtn.textContent = 'View Mode';
-                    updateStatus('Edit mode enabled');
-                } else {
-                    editPanel.style.display = 'none';
-                    gherkinContent.innerHTML = formatGherkinContent(currentGherkinContent);
-                    editBtn.textContent = 'Edit Mode';
-                    updateStatus('View mode enabled');
-                }
-            }
+            // Edit mode functions disabled for now
+            // function toggleEditMode() {
+            //     isEditMode = !isEditMode;
+            //     
+            //     if (isEditMode) {
+            //         editPanel.style.display = 'flex';
+            //         gherkinEditor.value = currentGherkinContent;
+            //         editBtn.textContent = 'View Mode';
+            //         updateStatus('Edit mode enabled');
+            //     } else {
+            //         editPanel.style.display = 'none';
+            //         gherkinContent.innerHTML = formatGherkinContent(currentGherkinContent);
+            //         editBtn.textContent = 'Edit Mode';
+            //         updateStatus('View mode enabled');
+            //     }
+            // }
 
-            function saveChanges() {
-                const newContent = gherkinEditor.value;
-                
-                vscode.postMessage({ 
-                    command: 'saveChanges', 
-                    content: newContent 
-                });
-                
-                currentGherkinContent = newContent;
-                toggleEditMode();
-                updateStatus('Changes saved');
-            }
+            // function saveChanges() {
+            //     const newContent = gherkinEditor.value;
+            //     
+            //     vscode.postMessage({ 
+            //         command: 'saveChanges', 
+            //         content: newContent 
+            //     });
+            //     
+            //     currentGherkinContent = newContent;
+            //     toggleEditMode();
+            //     updateStatus('Changes saved');
+            // }
 
-            function cancelEdit() {
-                toggleEditMode();
-                updateStatus('Edit cancelled');
-            }
+            // function cancelEdit() {
+            //     toggleEditMode();
+            //     updateStatus('Edit cancelled');
+            // }
 
             function updateStatus(text) {
                 statusText.textContent = text;
@@ -405,12 +416,12 @@ export class PreviewProvider {
             console.log('🚀 Webview initialized');
             console.log('🚀 DOM elements found:');
             console.log('🚀 - gherkinContent:', gherkinContent);
-            console.log('🚀 - editPanel:', editPanel);
-            console.log('🚀 - gherkinEditor:', gherkinEditor);
+            // console.log('🚀 - editPanel:', editPanel); // Edit mode disabled
+            // console.log('🚀 - gherkinEditor:', gherkinEditor); // Edit mode disabled
             console.log('🚀 - refreshBtn:', refreshBtn);
-            console.log('🚀 - editBtn:', editBtn);
-            console.log('🚀 - saveBtn:', saveBtn);
-            console.log('🚀 - cancelBtn:', cancelBtn);
+            // console.log('🚀 - editBtn:', editBtn); // Edit mode disabled
+            // console.log('🚀 - saveBtn:', saveBtn); // Edit mode disabled
+            // console.log('🚀 - cancelBtn:', cancelBtn); // Edit mode disabled
             console.log('🚀 - statusText:', statusText);
         })();
     </script>
