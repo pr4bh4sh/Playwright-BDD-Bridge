@@ -9,8 +9,8 @@ A VS Code extension that bridges Playwright tests to Gherkin syntax with live pr
 - **📝 Smart Conversion**: Intelligent parsing of Playwright test structures
 - **🔄 Real-time Refresh**: Update preview content with a single click
 - **📋 Context Menus**: Right-click on TypeScript test files to open preview
-- **⌨️ Command Palette Integration**: Access all features through VS Code commands
-- **📊 Comprehensive Logging**: Built-in Winston logging system for debugging and monitoring
+- **⌨️ Command Palette Integration**: Access features through VS Code commands
+- **📊 Comprehensive Logging**: Built-in logging system for debugging and monitoring
 - **🎯 Clean UI**: Modern, responsive webview interface
 - **🔍 Proper Gherkin Keywords**: Smart detection of Given/When/Then/And keywords based on step context
 
@@ -20,11 +20,11 @@ A VS Code extension that bridges Playwright tests to Gherkin syntax with live pr
 1. Download the `.vsix` file from the releases
 2. Install using VS Code:
    ```bash
-   code --install-extension playwright-bdd-bridge-0.1.0.vsix
+   code --install-extension playwright-bdd-bridge-0.1.1.vsix
    ```
    Or using Cursor:
    ```bash
-   cursor --install-extension playwright-bdd-bridge-0.1.0.vsix
+   cursor --install-extension playwright-bdd-bridge-0.1.1.vsix
    ```
 
 ### From Source
@@ -41,6 +41,10 @@ A VS Code extension that bridges Playwright tests to Gherkin syntax with live pr
 1. **Command Palette**: Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac) and type "Playwright: Open BDD Preview"
 2. **Context Menu**: Right-click on a TypeScript test file and select "Playwright: Open BDD Preview"
 3. **Refresh**: Use the "Refresh" button in the preview to update content
+
+### Quick Access via Right-Click
+
+The easiest way to access the BDD preview is by right-clicking on any TypeScript test file (`.ts` or `.spec.ts`) in the VS Code explorer. The context menu will show "Playwright: Open BDD Preview" option, allowing you to instantly convert and view your Playwright tests in Gherkin format.
 
 ### Example Conversion
 
@@ -118,9 +122,6 @@ Feature: User Authentication
 | Command | Description | Shortcut |
 |---------|-------------|----------|
 | `Playwright: Open BDD Preview` | Open BDD preview for current file | Command Palette |
-| `Playwright: Refresh BDD Preview` | Refresh the current preview | Refresh Button |
-| `Playwright: Show BDD View` | Show the preview view | Command Palette |
-| `Playwright: Open Log File` | Open the extension log file | Command Palette |
 
 ## 🔧 Supported Playwright Syntax
 
@@ -171,7 +172,7 @@ The extension intelligently converts:
 
 5. **Install for development**
    ```bash
-   cursor --install-extension playwright-bdd-bridge-0.1.0.vsix --force
+   cursor --install-extension playwright-bdd-bridge-0.1.1.vsix --force
    ```
 
 ### Project Structure
@@ -182,7 +183,7 @@ src/
 ├── playwright-parser.ts  # Parses Playwright test files
 ├── gherkin-converter.ts  # Converts to Gherkin syntax
 ├── preview-provider.ts   # Manages webview preview
-├── logger.ts            # Winston-based logging system
+├── logger.ts            # Logging system
 └── webview/
     ├── preview.html      # Webview HTML template
     ├── preview.css       # Webview styles
@@ -200,8 +201,7 @@ src/
 
 The extension includes a robust logging system:
 
-- **Log Files**: Check `extension.log` and `debug.log` in the extension directory
-- **Command**: Use "Playwright: Open Log File" to view logs
+- **Log Files**: Check extension logs in VS Code Output panel
 - **Console**: Check VS Code Developer Console for real-time logs
 
 ## 🤝 Contributing
@@ -238,7 +238,7 @@ Please report issues and provide feedback through the GitHub repository. Include
 - [x] Syntax highlighting
 - [x] Real-time preview with refresh functionality
 - [x] Context menu integration
-- [x] Comprehensive Winston logging system
+- [x] Comprehensive logging system
 - [x] Clean, modern UI
 - [x] Background support from `test.beforeEach()`
 - [x] Smart Gherkin keyword detection (Given/When/Then/And)
@@ -256,11 +256,16 @@ Please report issues and provide feedback through the GitHub repository. Include
 
 ## 📊 Version History
 
+### v0.1.1
+- Updated extension branding to "Playwright BDD Bridge"
+- Improved commit message formatting
+- Enhanced documentation
+
 ### v0.1.0
 - Initial release with core conversion functionality
 - Live preview with syntax highlighting and refresh capability
 - Context menu integration
-- Comprehensive Winston logging system
+- Comprehensive logging system
 - Clean, responsive UI
 - Background support from `test.beforeEach()` with `test.step()`
 - Smart Gherkin keyword detection (Given/When/Then/And)
