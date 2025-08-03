@@ -267,9 +267,11 @@ Please report issues and provide feedback through the GitHub repository. Include
 ## 📊 Version History
 
 ### v0.1.1
+- Added preview button in editor title bar for quick BDD preview access
+- Implemented custom editor with preview icon for .spec.ts and .test.ts files
+- Created custom SVG icons for light and dark themes
+- Enhanced documentation with new access methods
 - Updated extension branding to "Playwright BDD Bridge"
-- Improved commit message formatting
-- Enhanced documentation
 
 ### v0.1.0
 - Initial release with core conversion functionality
