@@ -109,31 +109,8 @@ export class GherkinConverter {
     }
 
     private convertStepToGherkinText(step: TestStep): string {
-        // Start with the step description
-        let text = step.description;
-
-        // Clean up the text to make it more readable
-        // Remove any extra quotes or formatting
-        text = text.replace(/['"`]/g, '');
-
-        // Convert common patterns to better Gherkin syntax
-        if (text.includes('enter username')) {
-            text = 'enters username';
-        } else if (text.includes('enter password')) {
-            text = 'enters password';
-        } else if (text.includes('click login button')) {
-            text = 'clicks the login button';
-        } else if (text.includes('verify successful login')) {
-            text = 'verify successful login';
-        } else if (text.includes('enter invalid username')) {
-            text = 'enters invalid username';
-        } else if (text.includes('enter invalid password')) {
-            text = 'enters invalid password';
-        } else if (text.includes('verify error message')) {
-            text = 'verify error message';
-        }
-
-        return text;
+        // Clean up the text by removing quotes and formatting artifacts
+        return step.description.replace(/['"`]/g, '');
     }
 
     generateGherkinString(document: GherkinDocument): string {
