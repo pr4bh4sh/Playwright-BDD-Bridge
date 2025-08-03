@@ -17,26 +17,9 @@ export function activate(context: vscode.ExtensionContext) {
         extensionPath: context.extensionPath
     });
     
-    // Register the preview provider
-    const previewProvider = new PreviewProvider(context);
-    const providerRegistration = vscode.window.registerCustomEditorProvider(
-        PreviewProvider.viewType,
-        previewProvider,
-        {
-            webviewOptions: { retainContextWhenHidden: true },
-            supportsMultipleEditorsPerDocument: false
-        }
-    );
+
     
-    // Register custom editor for BDD preview
-    const customEditorProvider = vscode.window.registerCustomEditorProvider(
-        'playwrightBddBridge.preview',
-        previewProvider,
-        {
-            webviewOptions: { retainContextWhenHidden: true },
-            supportsMultipleEditorsPerDocument: false
-        }
-    );
+
     
     // Register commands
     const testCommand = vscode.commands.registerCommand('playwright-bdd-bridge.test', () => {
@@ -64,20 +47,14 @@ export function activate(context: vscode.ExtensionContext) {
             // Log command execution
             Logger.info('🎯 Open preview command executed');
             
-            // Test the conversion with the current file
-            const sourceCode = document.getText();
-            const parser = new PlaywrightParser(sourceCode);
-            const parsedTest = parser.parse();
+            // Ensure the current editor stays visible
+            await vscode.window.showTextDocument(document, { viewColumn: vscode.ViewColumn.One });
             
-            const converter = new GherkinConverter();
-            const gherkinDocument = converter.convert(parsedTest);
-            const gherkinString = converter.generateGherkinString(gherkinDocument);
-            
-            // Open the preview in a new webview
+            // Open the preview in a new webview panel beside the current editor
             const panel = vscode.window.createWebviewPanel(
                 'playwrightBddBridge',
                 'Playwright BDD Bridge',
-                vscode.ViewColumn.Beside,
+                vscode.ViewColumn.Two,
                 {
                     enableScripts: true,
                     retainContextWhenHidden: true
@@ -88,10 +65,10 @@ export function activate(context: vscode.ExtensionContext) {
             const previewProvider = new PreviewProvider(context);
             previewProvider.setupWebview(panel, document);
             
-                                    vscode.window.showInformationMessage('BDD preview opened!');
+            vscode.window.showInformationMessage('BDD preview opened side by side!');
         } catch (error) {
             console.error('Error opening preview:', error);
-                                    vscode.window.showErrorMessage(`Error opening BDD preview: ${error instanceof Error ? error.message : 'Unknown error'}`);
+            vscode.window.showErrorMessage(`Error opening BDD preview: ${error instanceof Error ? error.message : 'Unknown error'}`);
         }
     });
     
@@ -125,8 +102,6 @@ export function activate(context: vscode.ExtensionContext) {
     
     // Register all subscriptions
     context.subscriptions.push(
-        providerRegistration,
-        customEditorProvider,
         testCommand,
         openPreviewCommand,
         refreshPreviewCommand,

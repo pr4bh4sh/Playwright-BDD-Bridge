@@ -5,7 +5,6 @@ import { GherkinConverter } from './gherkin-converter';
 import { Logger } from './logger';
 
 export class PreviewProvider {
-    public static readonly viewType = 'playwrightBddBridge';
     private readonly _extensionUri: vscode.Uri;
     private _disposables: vscode.Disposable[] = [];
 
@@ -76,13 +75,7 @@ export class PreviewProvider {
         this._refreshPreview(document, webviewPanel);
     }
 
-    public resolveCustomTextEditor(
-        document: vscode.TextDocument,
-        webviewPanel: vscode.WebviewPanel,
-        _token: vscode.CancellationToken
-    ): void | Thenable<void> {
-        this.setupWebview(webviewPanel, document);
-    }
+
 
     private _getHtmlForWebview(webview: vscode.Webview): string {
         return `<!DOCTYPE html>

@@ -10,7 +10,7 @@ A VS Code extension that bridges Playwright tests to Gherkin syntax with live pr
 - **🔄 Real-time Refresh**: Update preview content with a single click
 - **📋 Context Menus**: Right-click on TypeScript test files to open preview
 - **🔘 Preview Button**: Click the preview button in editor title bar for instant access
-- **📄 Custom Editor**: Native VS Code custom editor for `.spec.ts` and `.test.ts` files
+
 - **⌨️ Command Palette Integration**: Access features through VS Code commands
 - **📊 Comprehensive Logging**: Built-in logging system for debugging and monitoring
 - **🎯 Clean UI**: Modern, responsive webview interface
@@ -52,9 +52,7 @@ The easiest way to access the BDD preview is by right-clicking on any TypeScript
 
 When you open a TypeScript test file, you'll see a preview button (📄🔍) in the editor title bar. Click this button to instantly open the BDD preview for the current file. This provides quick visual access to convert your Playwright tests to Gherkin syntax.
 
-### Custom Editor Preview
 
-For `.spec.ts` and `.test.ts` files, the extension provides a custom editor with a dedicated preview icon in the editor tab. This gives you a native VS Code experience similar to Markdown preview, allowing you to open your Playwright tests directly in BDD preview mode.
 
 ### Example Conversion
 
@@ -268,7 +266,11 @@ Please report issues and provide feedback through the GitHub repository. Include
 
 ### v0.1.1
 - Added preview button in editor title bar for quick BDD preview access
+<<<<<<< Updated upstream
 - Implemented custom editor with preview icon for .spec.ts and .test.ts files
+=======
+
+>>>>>>> Stashed changes
 - Created custom SVG icons for light and dark themes
 - Enhanced documentation with new access methods
 - Updated extension branding to "Playwright BDD Bridge"

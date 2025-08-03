@@ -41,17 +41,7 @@
         "title": "Open Log File"
       }
     ],
-    "customEditors": [
-      {
-        "viewType": "playwrightBddBridge.preview",
-        "displayName": "Playwright BDD Preview",
-        "selector": [
-          { "filenamePattern": "*.spec.ts" },
-          { "filenamePattern": "*.test.ts" }
-        ],
-        "priority": "default"
-      }
-    ],
+
     "menus": {
       "explorer/context": [
         {
