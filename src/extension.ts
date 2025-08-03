@@ -6,14 +6,13 @@ import { GherkinConverter } from './gherkin-converter';
 import { Logger } from './logger';
 
 export function activate(context: vscode.ExtensionContext) {
-    console.log('Extension activating...'); // DEBUG LOG
-    vscode.window.showInformationMessage('Extension activated!');
+    console.log('Playwright BDD Bridge: Extension activating...'); // DEBUG LOG
     
     // Initialize VS Code OutputChannel logger
     const outputChannel = Logger.initialize(context);
     
     // Log extension activation
-    Logger.info('🚀 Extension activating...', { 
+    Logger.info('🚀 Playwright BDD Bridge: Extension activating...', { 
         extensionPath: context.extensionPath
     });
     
@@ -26,7 +25,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.window.showInformationMessage('Test command works!');
         
         // Log with Winston
-        Logger.info('🧪 Test command executed');
+        Logger.info('🧪 Playwright BDD Bridge: Test command executed');
     });
     
     const openPreviewCommand = vscode.commands.registerCommand('playwright-bdd-bridge.openPreview', async () => {
@@ -44,8 +43,8 @@ export function activate(context: vscode.ExtensionContext) {
         }
         
         try {
-            // Log command execution
-            Logger.info('🎯 Open preview command executed');
+                    // Log command execution
+        Logger.info('🎯 Playwright BDD Bridge: Open preview command executed');
             
             // Ensure the current editor stays visible
             await vscode.window.showTextDocument(document, { viewColumn: vscode.ViewColumn.One });
@@ -65,7 +64,8 @@ export function activate(context: vscode.ExtensionContext) {
             const previewProvider = new PreviewProvider(context);
             previewProvider.setupWebview(panel, document);
             
-            vscode.window.showInformationMessage('BDD preview opened side by side!');
+            // Log success message to output channel
+            Logger.info('✅ Playwright BDD Bridge: BDD preview opened side by side!');
         } catch (error) {
             console.error('Error opening preview:', error);
             vscode.window.showErrorMessage(`Error opening BDD preview: ${error instanceof Error ? error.message : 'Unknown error'}`);
