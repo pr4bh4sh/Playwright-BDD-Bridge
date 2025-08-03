@@ -44,6 +44,16 @@ A VS Code extension that bridges Playwright tests to Gherkin syntax with live pr
 2. **Context Menu**: Right-click on a TypeScript test file and select "Playwright: Open BDD Preview"
 3. **Refresh**: Use the "Refresh" button in the preview to update content
 
+### Available Commands
+
+The extension provides several commands accessible through the Command Palette:
+
+- **Playwright: Open BDD Preview**: Opens the BDD preview for the current file
+- **Refresh BDD Preview**: Refreshes the current preview content
+- **Show BDD Preview View**: Shows the preview view
+- **Test Extension**: Tests the extension functionality
+- **Open Log File**: Opens the extension log file (when logging is enabled)
+
 ### Quick Access via Right-Click
 
 The easiest way to access the BDD preview is by right-clicking on any TypeScript test file (`.ts` or `.spec.ts`) in the VS Code explorer. The context menu will show "Playwright: Open BDD Preview" option, allowing you to instantly convert and view your Playwright tests in Gherkin format.
@@ -53,6 +63,70 @@ The easiest way to access the BDD preview is by right-clicking on any TypeScript
 When you open a TypeScript test file, you'll see a preview button (📄🔍) in the editor title bar. Click this button to instantly open the BDD preview for the current file. This provides quick visual access to convert your Playwright tests to Gherkin syntax.
 
 
+
+### Settings
+
+The extension provides configurable settings for logging:
+
+- **Enable Logging**: Toggle logging on/off (default: **disabled**)
+- **Log Level**: Set logging level (error, warn, info, debug, trace)
+
+#### How to Configure:
+
+1. Open VS Code Settings (`Ctrl+,` or `Cmd+,`)
+2. Search for "Playwright BDD Bridge"
+3. Configure the following options:
+   - **Playwright BDD Bridge: Enable Logging**: Set to `true` to enable logging
+   - **Playwright BDD Bridge: Log Level**: Choose from error, warn, info, debug, or trace
+
+#### Default Settings:
+- **Enable Logging**: `false` (logging disabled by default)
+- **Log Level**: `trace` (shows all log levels when enabled)
+
+### Logging and Output Window
+
+The extension provides comprehensive logging capabilities through VS Code's Output Window for debugging and monitoring extension activity.
+
+#### How to Access Logs:
+
+1. **Open Output Panel**: 
+   - Press `Ctrl+Shift+U` (Windows/Linux) or `Cmd+Shift+U` (Mac)
+   - Or go to `View → Output` in the menu
+   
+2. **Select Log Channel**:
+   - In the Output panel dropdown, select "Playwright BDD Bridge"
+   - This will show all extension-related log messages
+
+#### Log Levels Explained:
+
+- **trace**: Shows all messages (most verbose)
+- **debug**: Shows debug information and above
+- **info**: Shows general information and above
+- **warn**: Shows warnings and errors only
+- **error**: Shows only error messages (least verbose)
+
+#### What You'll See in Logs:
+
+When logging is enabled, you'll see messages like:
+```
+[2024-01-15T10:30:00.000Z] [INFO] 🚀 Playwright BDD Bridge: Extension activating...
+[2024-01-15T10:30:05.000Z] [INFO] 🎯 Playwright BDD Bridge: Open preview command executed
+[2024-01-15T10:30:05.500Z] [INFO] ✅ Playwright BDD Bridge: BDD preview opened side by side!
+[2024-01-15T10:30:10.000Z] [INFO] 🧪 Playwright BDD Bridge: Test command executed
+```
+
+#### When to Enable Logging:
+
+- **Debugging Issues**: When the extension isn't working as expected
+- **Development**: When developing or testing the extension
+- **Troubleshooting**: When investigating performance or behavior issues
+- **Support**: When reporting bugs or issues
+
+#### Performance Note:
+
+- **Disabled by Default**: Logging is disabled by default for optimal performance
+- **Minimal Overhead**: When enabled, logging has minimal impact on extension performance
+- **Easy Toggle**: Can be quickly enabled/disabled through settings
 
 ### Example Conversion
 

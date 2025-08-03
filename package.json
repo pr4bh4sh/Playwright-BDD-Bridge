@@ -2,7 +2,7 @@
   "name": "playwright-bdd-bridge",
   "displayName": "Playwright BDD Bridge",
   "description": "A VS Code extension that bridges Playwright tests to Gherkin syntax with live preview and bidirectional editing capabilities.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "playwright-bdd-bridge",
   "engines": {
     "vscode": "^1.74.0"
@@ -79,6 +79,22 @@
           "icon": "$(preview)"
         }
       ]
+    },
+    "configuration": {
+      "title": "Playwright BDD Bridge",
+      "properties": {
+        "playwrightBddBridge.enableLogging": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable or disable logging for the Playwright BDD Bridge extension"
+        },
+        "playwrightBddBridge.logLevel": {
+          "type": "string",
+          "enum": ["error", "warn", "info", "debug", "trace"],
+          "default": "trace",
+          "description": "Set the logging level for the extension"
+        }
+      }
     }
   },
   "scripts": {
