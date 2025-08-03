@@ -23,6 +23,13 @@ export class PreviewProvider {
             localResourceRoots: []
         };
 
+        // Set custom icon for the webview panel
+        const iconPath = {
+            light: vscode.Uri.joinPath(this._extensionUri, 'media', 'preview-light.svg'),
+            dark: vscode.Uri.joinPath(this._extensionUri, 'media', 'preview-dark.svg')
+        };
+        webviewPanel.iconPath = iconPath;
+
         // Set the webview's initial html content
         webviewPanel.webview.html = this._getHtmlForWebview(webviewPanel.webview);
         Logger.info('🔧 Webview HTML set');

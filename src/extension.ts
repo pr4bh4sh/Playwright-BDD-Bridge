@@ -28,6 +28,16 @@ export function activate(context: vscode.ExtensionContext) {
         }
     );
     
+    // Register custom editor for BDD preview
+    const customEditorProvider = vscode.window.registerCustomEditorProvider(
+        'playwrightBddBridge.preview',
+        previewProvider,
+        {
+            webviewOptions: { retainContextWhenHidden: true },
+            supportsMultipleEditorsPerDocument: false
+        }
+    );
+    
     // Register commands
     const testCommand = vscode.commands.registerCommand('playwright-bdd-bridge.test', () => {
         vscode.window.showInformationMessage('Test command works!');
@@ -116,6 +126,7 @@ export function activate(context: vscode.ExtensionContext) {
     // Register all subscriptions
     context.subscriptions.push(
         providerRegistration,
+        customEditorProvider,
         testCommand,
         openPreviewCommand,
         refreshPreviewCommand,

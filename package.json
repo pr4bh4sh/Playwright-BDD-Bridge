@@ -18,7 +18,11 @@
     "commands": [
       {
         "command": "playwright-bdd-bridge.openPreview",
-        "title": "Playwright: Open BDD Preview"
+        "title": "Playwright: Open BDD Preview",
+        "icon": {
+          "light": "media/preview-light.svg",
+          "dark": "media/preview-dark.svg"
+        }
       },
       {
         "command": "playwright-bdd-bridge.refreshPreview",
@@ -35,6 +39,17 @@
       {
         "command": "playwright-bdd-bridge.openLogFile",
         "title": "Open Log File"
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "playwrightBddBridge.preview",
+        "displayName": "Playwright BDD Preview",
+        "selector": [
+          { "filenamePattern": "*.spec.ts" },
+          { "filenamePattern": "*.test.ts" }
+        ],
+        "priority": "default"
       }
     ],
     "menus": {
