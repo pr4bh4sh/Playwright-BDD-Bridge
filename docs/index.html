@@ -76,7 +76,18 @@
     await test.step('enter username', async () => {
       await page.fill('#username', 'testuser');
     });
-    // ... more steps
+
+    await test.step('enter password', async () => {
+      await page.fill('#password', 'password123');
+    });
+
+    await test.step('click login button', async () => {
+      await page.click('#login-button');
+    });
+
+    await test.step('verify successful login', async () => {
+      await expect(page.locator('.dashboard')).toBeVisible();
+    });
   });
 });</code></pre>
                         </div>
@@ -92,7 +103,13 @@ Scenario: should login with valid credentials
   Given enter username
   When enter password
   And click login button
-  Then verify successful login</code></pre>
+  Then verify successful login
+
+Scenario: should show error with invalid credentials
+  Given enter invalid username
+  When enter invalid password
+  And click login button
+  Then verify error message is displayed</code></pre>
                         </div>
                     </div>
                 </div>
