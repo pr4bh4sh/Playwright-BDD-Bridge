@@ -51,6 +51,28 @@
           "command": "playwright-bdd-bridge.openPreview",
           "group": "navigation"
         }
+      ],
+      "editor/title": [
+        {
+          "when": "resourceExtname == .ts",
+          "command": "playwright-bdd-bridge.openPreview",
+          "group": "navigation",
+          "icon": "$(preview)"
+        },
+        {
+          "when": "resourceExtname == .spec.ts",
+          "command": "playwright-bdd-bridge.openPreview",
+          "group": "navigation",
+          "icon": "$(test-view-icon)"
+        }
+      ],
+      "editor/titleBar": [
+        {
+          "when": "resourceExtname == .ts",
+          "command": "playwright-bdd-bridge.openPreview",
+          "group": "navigation",
+          "icon": "$(preview)"
+        }
       ]
     }
   },
