@@ -2,7 +2,25 @@ ti# Playwright BDD Bridge - Release Notes
 
 ## Version History
 
-### v0.1.2 (Latest)
+### v0.1.3 (Latest)
+**Commit:** `585cb41` | **Tag:** `v0.1.3`
+
+#### Code Quality Improvements
+- Comprehensive code cleanup and optimization
+- Removed 30+ debug console.log statements for better performance
+- Eliminated 100+ lines of commented edit mode code
+- Reduced extension package size by 0.7 KB
+- Improved code maintainability and readability
+
+#### Technical Improvements
+- Simplified Gherkin text conversion (removed hardcoded patterns)
+- Universal approach for any Playwright test scenario
+- Better scalability and future-proof design
+- Cleaner, production-ready codebase
+
+---
+
+### v0.1.2
 **Commit:** `effc5d0` | **Tag:** `v0.1.2`
 
 #### New Features
