@@ -211,7 +211,7 @@ src/
 
 The extension includes a robust logging system:
 
-- **Log Files**: Check extension logs in VS Code Output panel
+- **Output Panel**: Check "Playwright BDD Bridge" in VS Code Output panel for detailed logs
 - **Console**: Check VS Code Developer Console for real-time logs
 
 ## 🤝 Contributing
