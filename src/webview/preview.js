@@ -5,36 +5,16 @@
 
     // DOM elements
     const gherkinContent = document.getElementById('gherkinContent');
-    // Edit mode elements disabled for now
-    // const editPanel = document.getElementById('editPanel');
-    // const gherkinEditor = document.getElementById('gherkinEditor');
     const refreshBtn = document.getElementById('refreshBtn');
-    // const editBtn = document.getElementById('editBtn');
-    // const saveBtn = document.getElementById('saveBtn');
-    // const cancelBtn = document.getElementById('cancelBtn');
     const statusText = document.getElementById('statusText');
 
     let currentGherkinContent = '';
-    // let isEditMode = false; // Edit mode disabled for now
 
     // Event listeners
     refreshBtn.addEventListener('click', () => {
         vscode.postMessage({ command: 'refresh' });
         updateStatus('Refreshing...');
     });
-
-    // Edit mode event listeners disabled for now
-    // editBtn.addEventListener('click', () => {
-    //     toggleEditMode();
-    // });
-
-    // saveBtn.addEventListener('click', () => {
-    //     saveChanges();
-    // });
-
-    // cancelBtn.addEventListener('click', () => {
-    //     cancelEdit();
-    // });
 
     // Handle messages from the extension
     window.addEventListener('message', event => {
@@ -55,14 +35,6 @@
 
     function updateGherkinContent(content) {
         currentGherkinContent = content;
-        
-        // Edit mode disabled for now
-        // if (isEditMode) {
-        //     gherkinEditor.value = content;
-        // } else {
-        //     gherkinContent.innerHTML = formatGherkinContent(content);
-        // }
-        
         gherkinContent.innerHTML = formatGherkinContent(content);
         updateStatus('Content updated');
     }
@@ -81,40 +53,7 @@
             .replace(/\n/g, '<br>');
     }
 
-    // Edit mode functions disabled for now
-    // function toggleEditMode() {
-    //     isEditMode = !isEditMode;
-    //     
-    //     if (isEditMode) {
-    //         editPanel.style.display = 'flex';
-    //         gherkinEditor.value = currentGherkinContent;
-    //         editBtn.textContent = 'View Mode';
-    //         updateStatus('Edit mode enabled');
-    //         } else {
-    //         editPanel.style.display = 'none';
-    //         gherkinContent.innerHTML = formatGherkinContent(currentGherkinContent);
-    //         editBtn.textContent = 'Edit Mode';
-    //         updateStatus('View mode enabled');
-    //     }
-    // }
 
-    // function saveChanges() {
-    //     const newContent = gherkinEditor.value;
-    //     
-    //     vscode.postMessage({ 
-    //         command: 'saveChanges', 
-    //         content: newContent 
-    //     });
-    //     
-    //     currentGherkinContent = newContent;
-    //     toggleEditMode();
-    //     updateStatus('Changes saved');
-    // }
-
-    // function cancelEdit() {
-    //     toggleEditMode();
-    //     updateStatus('Edit cancelled');
-    // }
 
     function updateStatus(text) {
         statusText.textContent = text;

@@ -6,8 +6,6 @@ import { GherkinConverter } from './gherkin-converter';
 import { Logger } from './logger';
 
 export function activate(context: vscode.ExtensionContext) {
-    console.log('Playwright BDD Bridge: Extension activating...'); // DEBUG LOG
-    
     // Initialize VS Code OutputChannel logger
     const outputChannel = Logger.initialize(context);
     
@@ -15,10 +13,6 @@ export function activate(context: vscode.ExtensionContext) {
     Logger.info('🚀 Playwright BDD Bridge: Extension activating...', { 
         extensionPath: context.extensionPath
     });
-    
-
-    
-
     
     // Register commands
     const testCommand = vscode.commands.registerCommand('playwright-bdd-bridge.test', () => {
