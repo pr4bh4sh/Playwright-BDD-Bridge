@@ -1,8 +1,26 @@
-# Playwright BDD Bridge - Release Notes
+ti# Playwright BDD Bridge - Release Notes
 
 ## Version History
 
-### v0.1.1 (Latest)
+### v0.1.2 (Latest)
+**Commit:** `effc5d0` | **Tag:** `v0.1.2`
+
+#### New Features
+- Comprehensive logging system with configurable settings
+- VS Code Output Window integration for debugging
+- User-configurable log levels (error, warn, info, debug, trace)
+- "Open Log File" command for easy log access
+- Enhanced documentation with detailed logging instructions
+
+#### Technical Improvements
+- Configurable logging with performance optimization
+- Silent operation by default for better user experience
+- Branded log messages with extension identification
+- Settings panel integration for logging control
+
+---
+
+### v0.1.1
 **Commit:** `40b6d9e` | **Tag:** `v0.1.1`
 
 #### New Features
