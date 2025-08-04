@@ -20,11 +20,11 @@ A VS Code extension that bridges Playwright tests to Gherkin syntax with live pr
 1. Download the `.vsix` file from the releases
 2. Install using VS Code:
    ```bash
-   code --install-extension playwright-bdd-bridge-0.1.3.vsix
+   code --install-extension playwright-bdd-bridge-0.1.4.vsix
    ```
    Or using Cursor:
    ```bash
-   cursor --install-extension playwright-bdd-bridge-0.1.3.vsix
+   cursor --install-extension playwright-bdd-bridge-0.1.4.vsix
    ```
 
 ### From Source
@@ -255,7 +255,7 @@ The extension intelligently converts:
 
 5. **Install for development**
    ```bash
-   cursor --install-extension playwright-bdd-bridge-0.1.3.vsix --force
+   cursor --install-extension playwright-bdd-bridge-0.1.4.vsix --force
    ```
 
 ### Project Structure
