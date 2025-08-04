@@ -2,7 +2,32 @@ ti# Playwright BDD Bridge - Release Notes
 
 ## Version History
 
-### v0.1.2 (Latest)
+### v0.1.4 (Latest)
+**Commit:** `2e12dc0` | **Tag:** `v0.1.4`
+
+#### Documentation Improvements
+- Enhanced README structure and organization
+- Updated installation instructions with correct repository URL
+- Improved configuration and logging documentation
+- Better formatting and readability throughout
+- Updated version references and installation commands
+
+#### Technical Improvements
+- Fixed merge conflict markers in documentation
+- Updated all version references to v0.1.4
+- Improved development setup instructions
+
+---
+
+### v0.1.3
+**Commit:** `fec6cc6` | **Tag:** `v0.1.3`
+
+#### Documentation Updates
+- Initial version bump and documentation improvements
+
+---
+
+### v0.1.2
 **Commit:** `effc5d0` | **Tag:** `v0.1.2`
 
 #### New Features
