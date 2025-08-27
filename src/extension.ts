@@ -40,6 +40,21 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showErrorMessage('Please open a TypeScript file');
             return;
         }
+
+        // Check if the file appears to be a Playwright test file
+        const content = document.getText();
+        const hasPlaywrightImports = content.includes('from \'@playwright/test\'') || content.includes('from "@playwright/test"');
+        const hasTestDescribe = content.includes('test.describe') || content.includes('test(');
+        
+        if (!hasPlaywrightImports && !hasTestDescribe) {
+            const proceed = await vscode.window.showWarningMessage(
+                'This file does not appear to be a Playwright test file. Do you want to continue?',
+                'Continue', 'Cancel'
+            );
+            if (proceed !== 'Continue') {
+                return;
+            }
+        }
         
         try {
                     // Log command execution

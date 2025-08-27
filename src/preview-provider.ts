@@ -540,12 +540,13 @@ export class PreviewProvider {
         try {
             // For now, we'll just show a message that saving is not implemented
             // In a full implementation, this would convert Gherkin back to Playwright
+            Logger.info('Save changes requested - functionality not yet implemented');
             webviewPanel.webview.postMessage({
                 command: 'updateStatus',
                 text: 'Save functionality not yet implemented'
             });
         } catch (error) {
-            console.error('Error saving changes:', error);
+            Logger.error(`Error saving changes: ${error instanceof Error ? error.message : 'Unknown error'}`);
             webviewPanel.webview.postMessage({
                 command: 'showError',
                 error: error instanceof Error ? error.message : 'Error saving changes'
