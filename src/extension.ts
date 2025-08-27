@@ -6,7 +6,6 @@ import { GherkinConverter } from './gherkin-converter';
 import { Logger } from './logger';
 
 export function activate(context: vscode.ExtensionContext) {
-    console.log('Playwright BDD Bridge: Extension activating...'); // DEBUG LOG
     
     // Initialize VS Code OutputChannel logger
     const outputChannel = Logger.initialize(context);
@@ -67,7 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
             // Log success message to output channel
             Logger.info('✅ Playwright BDD Bridge: BDD preview opened side by side!');
         } catch (error) {
-            console.error('Error opening preview:', error);
+            Logger.error(`Error opening preview: ${error instanceof Error ? error.message : 'Unknown error'}`);
             vscode.window.showErrorMessage(`Error opening BDD preview: ${error instanceof Error ? error.message : 'Unknown error'}`);
         }
     });
