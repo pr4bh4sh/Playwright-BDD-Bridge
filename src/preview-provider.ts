@@ -14,7 +14,6 @@ export class PreviewProvider {
 
     public setupWebview(webviewPanel: vscode.WebviewPanel, document: vscode.TextDocument): void {
         Logger.info('🔧 Setting up webview...');
-        console.log('🔧 Setting up webview...');
         
         // Set up the webview with proper isolation
         webviewPanel.webview.options = {
@@ -32,13 +31,11 @@ export class PreviewProvider {
         // Set the webview's initial html content
         webviewPanel.webview.html = this._getHtmlForWebview(webviewPanel.webview);
         Logger.info('🔧 Webview HTML set');
-        console.log('🔧 Webview HTML set');
 
         // Handle messages from the webview
         webviewPanel.webview.onDidReceiveMessage(
             message => {
                 Logger.info(`📨 Extension received message from webview: ${JSON.stringify(message)}`);
-                console.log('📨 Extension received message from webview:', message);
                 switch (message.command) {
                     case 'refresh':
                         this._refreshPreview(document, webviewPanel);
@@ -61,7 +58,6 @@ export class PreviewProvider {
             event => {
                 if (event.webviewPanel.visible && event.webviewPanel.active) {
                     Logger.info('🔄 Webview regained focus, refreshing content...');
-                    console.log('🔄 Webview regained focus, refreshing content...');
                     this._refreshPreview(document, webviewPanel);
                 }
             },
@@ -71,7 +67,6 @@ export class PreviewProvider {
 
         // Initial content load
         Logger.info('🔧 Starting initial content load...');
-        console.log('🔧 Starting initial content load...');
         this._refreshPreview(document, webviewPanel);
     }
 
@@ -378,32 +373,21 @@ export class PreviewProvider {
             // Handle messages from the extension
             window.addEventListener('message', event => {
                 const message = event.data;
-                console.log('📨 Webview received message:', message);
-                console.log('📨 Message command:', message.command);
-                console.log('📨 Message content length:', message.content ? message.content.length : 'no content');
 
                 switch (message.command) {
                     case 'updateContent':
-                        console.log('📨 Processing updateContent command...');
                         updateGherkinContent(message.content);
                         break;
                     case 'updateStatus':
-                        console.log('📨 Processing updateStatus command...');
                         updateStatus(message.text);
                         break;
                     case 'showError':
-                        console.log('📨 Processing showError command...');
                         showError(message.error);
                         break;
-                    default:
-                        console.log('📨 Unknown command:', message.command);
                 }
             });
 
             function updateGherkinContent(content) {
-                console.log('📝 updateGherkinContent called with:', content);
-                console.log('📝 Content type:', typeof content);
-                console.log('📝 Content length:', content ? content.length : 'null/undefined');
                 currentGherkinContent = content;
                 
                 // Edit mode disabled for now
@@ -417,22 +401,17 @@ export class PreviewProvider {
                 //     gherkinContent.innerHTML = formattedContent;
                 // }
                 
-                console.log('📝 Setting content in view mode');
                 const formattedContent = formatGherkinContent(content);
-                console.log('📝 Formatted content:', formattedContent);
                 gherkinContent.innerHTML = formattedContent;
                 
                 updateStatus('Content updated');
             }
 
             function formatGherkinContent(content) {
-                console.log('🎨 formatGherkinContent called with:', content);
                 if (!content) {
-                    console.log('🎨 No content, returning loading message');
                     return '<div class="loading">No content available</div>';
                 }
 
-                console.log('🎨 Formatting content...');
                 // Simple syntax highlighting
                 const formatted = content
                     .replace(/^(Feature:.*)$/gm, '<div class="gherkin-feature">$1</div>')
@@ -441,7 +420,6 @@ export class PreviewProvider {
                     .replace(/\\b(Given|When|Then|And)\\b/g, '<span class="gherkin-keyword">$1</span>')
                     .replace(/\\n/g, '<br>');
                 
-                console.log('🎨 Formatted result:', formatted);
                 return formatted;
             }
 
@@ -482,7 +460,6 @@ export class PreviewProvider {
 
             function updateStatus(text) {
                 statusText.textContent = text;
-                console.log('Status updated:', text);
             }
 
             function showError(error) {
@@ -492,23 +469,12 @@ export class PreviewProvider {
 
             // Initialize
             updateStatus('Ready');
-            console.log('🚀 Webview initialized');
-            console.log('🚀 DOM elements found:');
-            console.log('🚀 - gherkinContent:', gherkinContent);
-            // console.log('🚀 - editPanel:', editPanel); // Edit mode disabled
-            // console.log('🚀 - gherkinEditor:', gherkinEditor); // Edit mode disabled
-            console.log('🚀 - refreshBtn:', refreshBtn);
-            // console.log('🚀 - editBtn:', editBtn); // Edit mode disabled
-            // console.log('🚀 - saveBtn:', saveBtn); // Edit mode disabled
-            // console.log('🚀 - cancelBtn:', cancelBtn); // Edit mode disabled
-            console.log('🚀 - statusText:', statusText);
             
             // Notify extension that webview is ready
             vscode.postMessage({ command: 'webviewReady' });
             
             // Handle window focus events
             window.addEventListener('focus', () => {
-                console.log('🔄 Window gained focus, requesting content refresh...');
                 vscode.postMessage({ command: 'refresh' });
             });
         })();
@@ -520,64 +486,44 @@ export class PreviewProvider {
     private async _refreshPreview(document: vscode.TextDocument, webviewPanel: vscode.WebviewPanel): Promise<void> {
         try {
             Logger.info('🔄 Starting preview refresh...');
-            console.log('🔄 Starting preview refresh...');
             
             const sourceCode = document.getText();
             Logger.info(`📄 Source code length: ${sourceCode.length}`);
             Logger.info(`📄 Source code preview: ${sourceCode.substring(0, 200)}...`);
-            Logger.info(`📄 Full source code: ${sourceCode}`);
-            console.log('📄 Source code length:', sourceCode.length);
-            console.log('📄 Source code preview:', sourceCode.substring(0, 200) + '...');
-            console.log('📄 Full source code:', sourceCode);
             
             Logger.info('🔍 Creating parser...');
-            console.log('🔍 Creating parser...');
             const parser = new PlaywrightParser(sourceCode);
             
             Logger.info('🔍 Parsing test file...');
-            console.log('🔍 Parsing test file...');
             const parsedTest = parser.parse();
             Logger.info(`📊 Parsed test result: ${JSON.stringify(parsedTest, null, 2)}`);
-            console.log('📊 Parsed test result:', JSON.stringify(parsedTest, null, 2));
             
             Logger.info('🔄 Creating converter...');
-            console.log('🔄 Creating converter...');
             const converter = new GherkinConverter();
             
             Logger.info('🔄 Converting to Gherkin document...');
-            console.log('🔄 Converting to Gherkin document...');
             const gherkinDocument = converter.convert(parsedTest);
             Logger.info(`📊 Gherkin document: ${JSON.stringify(gherkinDocument, null, 2)}`);
-            console.log('📊 Gherkin document:', JSON.stringify(gherkinDocument, null, 2));
             
             Logger.info('🔄 Generating Gherkin string...');
-            console.log('🔄 Generating Gherkin string...');
             const gherkinString = converter.generateGherkinString(gherkinDocument);
-            Logger.info(`✅ Generated Gherkin string: ${gherkinString}`);
-            Logger.info(`✅ Gherkin string length: ${gherkinString.length}`);
-            console.log('✅ Generated Gherkin string:', gherkinString);
-            console.log('✅ Gherkin string length:', gherkinString.length);
+            Logger.info(`✅ Generated Gherkin string length: ${gherkinString.length}`);
 
             Logger.info('📤 Sending updateContent message to webview...');
-            console.log('📤 Sending updateContent message to webview...');
             webviewPanel.webview.postMessage({
                 command: 'updateContent',
                 content: gherkinString
             });
             Logger.info('✅ updateContent message sent');
-            console.log('✅ updateContent message sent');
 
             Logger.info('📤 Sending updateStatus message to webview...');
-            console.log('📤 Sending updateStatus message to webview...');
             webviewPanel.webview.postMessage({
                 command: 'updateStatus',
                 text: 'Preview updated successfully'
             });
             Logger.info('✅ updateStatus message sent');
-            console.log('✅ updateStatus message sent');
             
             Logger.info('🎉 Preview refresh completed successfully');
-            console.log('🎉 Preview refresh completed successfully');
         } catch (error) {
             Logger.info(`❌ Error refreshing preview: ${error}`);
             Logger.info(`❌ Error stack: ${error instanceof Error ? error.stack : 'No stack trace'}`);
@@ -594,12 +540,13 @@ export class PreviewProvider {
         try {
             // For now, we'll just show a message that saving is not implemented
             // In a full implementation, this would convert Gherkin back to Playwright
+            Logger.info('Save changes requested - functionality not yet implemented');
             webviewPanel.webview.postMessage({
                 command: 'updateStatus',
                 text: 'Save functionality not yet implemented'
             });
         } catch (error) {
-            console.error('Error saving changes:', error);
+            Logger.error(`Error saving changes: ${error instanceof Error ? error.message : 'Unknown error'}`);
             webviewPanel.webview.postMessage({
                 command: 'showError',
                 error: error instanceof Error ? error.message : 'Error saving changes'

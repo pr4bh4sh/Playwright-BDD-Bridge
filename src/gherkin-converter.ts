@@ -84,23 +84,19 @@ export class GherkinConverter {
             return 'Given';
         }
 
+        // Define keyword patterns for better maintainability
+        const actionKeywords = ['click', 'enter', 'fill', 'type', 'submit', 'navigate', 'go to'];
+        const verificationKeywords = ['verify', 'check', 'should', 'expect', 'assert'];
+
         // Check for action keywords (When)
-        if (description.includes('click') || 
-            description.includes('enter') || 
-            description.includes('fill') ||
-            description.includes('type') ||
-            description.includes('submit') ||
-            description.includes('navigate') ||
-            description.includes('go to')) {
+        const hasActionKeyword = actionKeywords.some(keyword => description.includes(keyword));
+        if (hasActionKeyword) {
             return index === 1 ? 'When' : 'And';
         }
 
         // Check for verification keywords (Then)
-        if (description.includes('verify') || 
-            description.includes('check') || 
-            description.includes('should') ||
-            description.includes('expect') ||
-            description.includes('assert')) {
+        const hasVerificationKeyword = verificationKeywords.some(keyword => description.includes(keyword));
+        if (hasVerificationKeyword) {
             return 'Then';
         }
 
@@ -116,21 +112,24 @@ export class GherkinConverter {
         // Remove any extra quotes or formatting
         text = text.replace(/['"`]/g, '');
 
-        // Convert common patterns to better Gherkin syntax
-        if (text.includes('enter username')) {
-            text = 'enters username';
-        } else if (text.includes('enter password')) {
-            text = 'enters password';
-        } else if (text.includes('click login button')) {
-            text = 'clicks the login button';
-        } else if (text.includes('verify successful login')) {
-            text = 'verify successful login';
-        } else if (text.includes('enter invalid username')) {
-            text = 'enters invalid username';
-        } else if (text.includes('enter invalid password')) {
-            text = 'enters invalid password';
-        } else if (text.includes('verify error message')) {
-            text = 'verify error message';
+        // Convert common patterns to better Gherkin syntax using a mapping
+        const patterns = new Map([
+            ['enter username', 'enters username'],
+            ['enter password', 'enters password'],
+            ['click login button', 'clicks the login button'],
+            ['verify successful login', 'verify successful login'],
+            ['enter invalid username', 'enters invalid username'],
+            ['enter invalid password', 'enters invalid password'],
+            ['verify error message', 'verify error message'],
+            // Add more patterns as needed
+        ]);
+
+        // Apply pattern replacements
+        for (const [pattern, replacement] of patterns) {
+            if (text.includes(pattern)) {
+                text = replacement;
+                break; // Use first match to avoid conflicts
+            }
         }
 
         return text;

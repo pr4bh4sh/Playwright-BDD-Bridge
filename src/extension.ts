@@ -6,7 +6,6 @@ import { GherkinConverter } from './gherkin-converter';
 import { Logger } from './logger';
 
 export function activate(context: vscode.ExtensionContext) {
-    console.log('Playwright BDD Bridge: Extension activating...'); // DEBUG LOG
     
     // Initialize VS Code OutputChannel logger
     const outputChannel = Logger.initialize(context);
@@ -41,6 +40,21 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showErrorMessage('Please open a TypeScript file');
             return;
         }
+
+        // Check if the file appears to be a Playwright test file
+        const content = document.getText();
+        const hasPlaywrightImports = content.includes('from \'@playwright/test\'') || content.includes('from "@playwright/test"');
+        const hasTestDescribe = content.includes('test.describe') || content.includes('test(');
+        
+        if (!hasPlaywrightImports && !hasTestDescribe) {
+            const proceed = await vscode.window.showWarningMessage(
+                'This file does not appear to be a Playwright test file. Do you want to continue?',
+                'Continue', 'Cancel'
+            );
+            if (proceed !== 'Continue') {
+                return;
+            }
+        }
         
         try {
                     // Log command execution
@@ -67,7 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
             // Log success message to output channel
             Logger.info('✅ Playwright BDD Bridge: BDD preview opened side by side!');
         } catch (error) {
-            console.error('Error opening preview:', error);
+            Logger.error(`Error opening preview: ${error instanceof Error ? error.message : 'Unknown error'}`);
             vscode.window.showErrorMessage(`Error opening BDD preview: ${error instanceof Error ? error.message : 'Unknown error'}`);
         }
     });

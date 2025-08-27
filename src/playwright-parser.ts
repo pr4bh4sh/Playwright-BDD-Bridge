@@ -39,14 +39,19 @@ export class PlaywrightParser {
         let braceCount = 0;
         let inTestFunction = false;
 
-        for (let i = 0; i < this.lines.length; i++) {
+        try {
+            for (let i = 0; i < this.lines.length; i++) {
             const line = this.lines[i];
             const trimmedLine = line.trim();
             
             // Count braces to track function boundaries
             for (const char of line) {
-                if (char === '{') braceCount++;
-                if (char === '}') braceCount--;
+                if (char === '{') {
+                    braceCount++;
+                }
+                if (char === '}') {
+                    braceCount--;
+                }
             }
             
             // Parse test.describe
@@ -140,6 +145,10 @@ export class PlaywrightParser {
         }
 
         return { suites };
+        } catch (error) {
+            // Return empty structure if parsing fails
+            return { suites: [] };
+        }
     }
 
     private extractStringLiteral(line: string): string | null {
@@ -151,24 +160,29 @@ export class PlaywrightParser {
         let code = '';
         let braceCount = 0;
         let started = false;
+        const maxLines = 100; // Prevent infinite loops
+        let processedLines = 0;
         
-        for (let i = startLine; i < this.lines.length; i++) {
+        for (let i = startLine; i < this.lines.length && processedLines < maxLines; i++, processedLines++) {
             const line = this.lines[i];
             
-            if (line.includes('{')) {
-                braceCount++;
-                started = true;
+            // Count braces more accurately by checking each character
+            for (const char of line) {
+                if (char === '{') {
+                    braceCount++;
+                    started = true;
+                } else if (char === '}') {
+                    braceCount--;
+                }
             }
             
             if (started) {
                 code += line + '\n';
             }
             
-            if (line.includes('}')) {
-                braceCount--;
-                if (braceCount === 0) {
-                    break;
-                }
+            // Exit when we've closed all braces
+            if (started && braceCount === 0) {
+                break;
             }
         }
         
